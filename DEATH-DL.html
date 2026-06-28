@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEATH-DL // Necro TikTok Downloader & Crypt Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome untuk Ikon Tengkorak & Cyber Gothic -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Creepster, Share Tech Mono & Space Grotesk -->
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Share+Tech+Mono&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        mono: ['"Share Tech Mono"', 'monospace'],
+                        sans: ['"Space Grotesk"', 'sans-serif'],
+                        creepy: ['"Creepster"', 'cursive'],
+                    },
+                    colors: {
+                        cyber: {
+                            bg: '#050307',       // Hitam Pekat Makam
+                            panel: '#0d0a0f',    // Abu-abu Gelap Obsidian
+                            border: '#1d1524',   // Ungu Gelap Spectral
+                            primary: '#ff003c',  // Neon Death Red
+                            secondary: '#8a2be2', // Grave Purple
+                            accent: '#e6dfd3',   // Bone White / Putih Tulang
+                            text: '#ede8f5'
+                        }
+                    },
+                    boxShadow: {
+                        'neon-red': '0 0 20px rgba(255, 0, 60, 0.4)',
+                        'neon-purple': '0 0 20px rgba(138, 43, 226, 0.3)',
+                        'neon-bone': '0 0 20px rgba(230, 223, 211, 0.2)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Gaya Scrollbar Bertema Death */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050307;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1d1524;
+            border-radius: 4px;
+            border: 1px solid #ff003c;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff003c;
+        }
+
+        /* Animasi Grid Latar Belakang Makam Digital */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 0, 60, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 0, 60, 0.03) 1px, transparent 1px);
+        }
+
+        /* Animasi Blood Laser Scan */
+        @keyframes laser-scan {
+            0% { top: 0%; opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+        .laser-line {
+            animation: laser-scan 3s linear infinite;
+        }
+
+        /* Animasi Aura Kematian Berdenyut */
+        @keyframes pulse-grave {
+            0%, 100% { opacity: 0.6; box-shadow: 0 0 10px rgba(255, 0, 60, 0.2); }
+            50% { opacity: 1; box-shadow: 0 0 25px rgba(255, 0, 60, 0.6); }
+        }
+        .pulse-cyber {
+            animation: pulse-grave 2s infinite;
+        }
+
+        /* Animasi Glitch Horor */
+        .glitch-text {
+            position: relative;
+        }
+        .glitch-text::before, .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #050307;
+        }
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -1px 0 #8a2be2;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -1px 0 #ff003c, 0 1px #ff003c;
+            clip: rect(85px, 450px, 140px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim {
+            0% { clip: rect(15px, 9999px, 66px, 0); }
+            100% { clip: rect(34px, 9999px, 55px, 0); }
+        }
+        @keyframes glitch-anim2 {
+            0% { clip: rect(70px, 9999px, 105px, 0); }
+            100% { clip: rect(12px, 9999px, 85px, 0); }
+        }
+
+        /* Orbit Melingkar */
+        @keyframes orbit {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .orbit-slow {
+            animation: orbit 25s linear infinite;
+        }
+        .orbit-reverse {
+            animation: orbit 18s linear infinite reverse;
+        }
+
+        /* Animasi Sirkuit Aura Merah Menyala */
+        @keyframes circuit-glow {
+            0%, 100% { border-color: rgba(255, 0, 60, 0.3); }
+            50% { border-color: rgba(255, 0, 60, 1); }
+        }
+        .circuit-border {
+            animation: circuit-glow 3s infinite;
+        }
+    </style>
+</head>
+<body class="bg-cyber-bg text-cyber-text font-sans min-h-screen relative overflow-x-hidden bg-grid">
+
+    <!-- INTRO SCREEN (VIDEO PLAYER) -->
+    <div id="intro-screen" class="fixed inset-0 z-50 bg-black flex items-center justify-center transition-all duration-1000 ease-out">
+        <!-- Tombol Skip di Kanan Atas -->
+        <button id="skip-intro-btn" class="absolute top-6 right-6 z-50 px-5 py-2.5 bg-black/60 hover:bg-cyber-primary/95 border border-cyber-primary text-cyber-text hover:text-black font-mono text-sm font-bold tracking-widest rounded-lg flex items-center gap-2 transition-all duration-300 shadow-neon-red active:scale-95 pointer-events-auto">
+            SKIP INTRO <i class="fa-solid fa-angles-right"></i>
+        </button>
+
+        <!-- Video Intro -->
+        <video id="intro-video" class="w-full h-full object-cover" autoplay playsinline>
+            <source src="https://files.catbox.moe/dncz0j.mp4" type="video/mp4">
+            Browser Anda tidak mendukung pemutaran video intro.
+        </video>
+    </div>
+
+    <!-- MAIN APP CONTAINER (Tersembunyi saat intro diputar) -->
+    <div id="main-app" class="opacity-0 transition-opacity duration-1000 pointer-events-none">
+        
+        <!-- Efek Ornamen Latar Belakang & Radar Kematian -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+            <!-- Blood Scan Line -->
+            <div class="absolute w-full h-[2px] bg-gradient-to-r from-transparent via-cyber-primary to-transparent opacity-40 laser-line"></div>
+            
+            <!-- Ornamen Tengkorak Makam di Pojok Kanan Atas -->
+            <div class="absolute -top-20 -right-20 w-96 h-96 rounded-full border border-dashed border-cyber-primary/10 orbit-slow flex items-center justify-center">
+                <div class="w-80 h-80 rounded-full border border-double border-cyber-secondary/20 orbit-reverse flex items-center justify-center">
+                    <div class="w-56 h-56 rounded-full border border-cyber-accent/10 flex items-center justify-center">
+                        <i class="fa-solid fa-skull-crossbones text-cyber-primary/10 text-6xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NOTIFIKASI TOAST CUSTOM -->
+        <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-3 max-w-sm pointer-events-none"></div>
+
+        <!-- NAVBAR CYBER-DEATH -->
+        <header class="border-b border-cyber-border bg-cyber-bg/90 backdrop-blur-md sticky top-0 z-40 transition-all duration-300">
+            <div class="max-w-6xl mx-auto px-4 h-20 flex items-center justify-between">
+                <!-- Brand Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="relative w-12 h-12 flex items-center justify-center bg-cyber-panel border border-cyber-primary rounded-xl overflow-hidden pulse-cyber">
+                        <i class="fa-solid fa-skull text-cyber-primary text-xl"></i>
+                        <div class="absolute inset-x-0 bottom-0 h-1 bg-cyber-primary"></div>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-mono font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyber-primary to-cyber-secondary glitch-text" data-text="DEATH-DL">
+                            DEATH-DL <span class="text-cyber-accent text-xs">v4.0</span>
+                        </h1>
+                        <p class="text-[10px] font-mono tracking-wider text-gray-500">MEMENTO MORI MEDIA SYSTEM</p>
+                    </div>
+                </div>
+
+                <!-- Menu Portofolio -->
+                <nav class="hidden md:flex items-center gap-6 font-mono text-sm">
+                    <a href="#downloader" class="hover:text-cyber-primary transition-colors flex items-center gap-2 text-cyber-primary border-b border-cyber-primary pb-1">
+                        <span class="text-[10px] text-cyber-primary/60">01//</span> GRAVE EXTRACTOR
+                    </a>
+                    <a href="#about" class="hover:text-cyber-primary transition-colors flex items-center gap-2 text-gray-400">
+                        <span class="text-[10px] text-cyber-secondary/60">02//</span> CRYPT OWNER
+                    </a>
+                    <a href="#features" class="hover:text-cyber-primary transition-colors flex items-center gap-2 text-gray-400">
+                        <span class="text-[10px] text-cyber-accent/60">03//</span> RITUALS
+                    </a>
+                </nav>
+
+                <!-- Status Core -->
+                <div class="flex items-center gap-3 bg-cyber-panel/60 border border-cyber-border px-4 py-2 rounded-lg">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyber-primary opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-cyber-primary"></span>
+                    </span>
+                    <span class="text-xs font-mono tracking-wider text-gray-400">SOUL GATE OPEN</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-6xl mx-auto px-4 py-10 relative z-10">
+
+            <!-- SECTION 1: DOWNLOADER -->
+            <section id="downloader" class="mb-16">
+                <div class="text-center mb-10">
+                    <div class="inline-block px-3 py-1 bg-cyber-primary/10 border border-cyber-primary/30 rounded-full text-xs font-mono text-cyber-primary mb-3 uppercase tracking-widest animate-bounce">
+                        <i class="fa-solid fa-bone mr-1"></i> BYPASS TIKTOK SECURE CORES
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 font-mono">
+                        EKSTRAKTOR JIWA <span class="text-cyber-primary">MEDIA TIKTOK</span>
+                    </h2>
+                    <p class="text-gray-400 max-w-xl mx-auto text-sm md:text-base">
+                        Sistem otomatisasi visual bertema kematian (*death*) untuk mendeteksi, melihat pratinjau media secara real-time, dan mengunduh video/audio secara instan langsung tanpa membuka tab baru.
+                    </p>
+                </div>
+
+                <!-- Search Area -->
+                <div class="max-w-3xl mx-auto bg-cyber-panel border border-cyber-border rounded-2xl p-6 shadow-neon-red relative overflow-hidden group circuit-border">
+                    <!-- Ornamen Sudut Tulang -->
+                    <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-cyber-primary"></div>
+                    <div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-cyber-primary"></div>
+                    
+                    <div class="relative z-10">
+                        <label class="block text-xs font-mono tracking-wider text-gray-400 mb-2 uppercase">
+                            Gantung Link TikTok Anda Di Sini:
+                        </label>
+                        <div class="flex flex-col md:flex-row gap-3">
+                            <div class="relative flex-1">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-cyber-primary/60">
+                                    <i class="fa-solid fa-skull-crossbones"></i>
+                                </div>
+                                <input 
+                                    type="text" 
+                                    id="tiktok-url" 
+                                    placeholder="Tempel link TikTok makam di sini..." 
+                                    class="w-full pl-11 pr-12 py-4 bg-cyber-bg border border-cyber-border focus:border-cyber-primary focus:outline-none focus:ring-1 focus:ring-cyber-primary rounded-xl text-cyber-text font-mono placeholder-gray-600 transition-all duration-300"
+                                >
+                                <button id="btn-clear" class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-500 hover:text-cyber-primary hidden">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                </button>
+                            </div>
+                            <button 
+                                id="btn-scan" 
+                                class="px-8 py-4 bg-gradient-to-r from-cyber-primary to-cyber-secondary hover:from-cyber-secondary hover:to-cyber-primary text-cyber-text font-bold rounded-xl font-mono flex items-center justify-center gap-2 shadow-neon-red hover:shadow-neon-purple active:scale-95 transition-all duration-300"
+                            >
+                                <i class="fa-solid fa-ghost"></i> EKSTRAK SOUL
+                            </button>
+                        </div>
+
+                        <!-- Tombol Demo Konten -->
+                        <div class="mt-4 flex flex-wrap items-center gap-2 text-xs font-mono text-gray-500">
+                            <span>PEMBERIAN SESAJEN DEMO:</span>
+                            <button onclick="loadSampleLink('video')" class="px-3 py-1 bg-cyber-bg hover:bg-cyber-primary/10 border border-cyber-border hover:border-cyber-primary rounded transition-all flex items-center gap-1 text-cyber-accent">
+                                <i class="fa-solid fa-file-video text-cyber-primary text-[10px]"></i> Ritual Video
+                            </button>
+                            <button onclick="loadSampleLink('images')" class="px-3 py-1 bg-cyber-bg hover:bg-cyber-secondary/10 border border-cyber-border hover:border-cyber-secondary rounded transition-all flex items-center gap-1 text-cyber-accent">
+                                <i class="fa-solid fa-images text-cyber-secondary text-[10px]"></i> Ritual Slide
+                            </button>
+                            <button onclick="loadSampleLink('audio')" class="px-3 py-1 bg-cyber-bg hover:bg-cyber-accent/10 border border-cyber-border hover:border-cyber-accent rounded transition-all flex items-center gap-1 text-cyber-accent">
+                                <i class="fa-solid fa-music text-cyber-accent text-[10px]"></i> Ritual Musik
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SCANNING LOADER -->
+                <div id="loader-panel" class="hidden mt-8 max-w-2xl mx-auto bg-cyber-panel border border-cyber-border rounded-2xl p-8 text-center relative overflow-hidden">
+                    <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyber-primary via-cyber-secondary to-cyber-accent animate-pulse"></div>
+                    
+                    <div class="relative w-24 h-24 mx-auto mb-6">
+                        <div class="absolute inset-0 rounded-full border-4 border-dashed border-cyber-primary/30 orbit-slow"></div>
+                        <div class="absolute inset-2 rounded-full border-2 border-dotted border-cyber-secondary/40 orbit-reverse"></div>
+                        <div class="absolute inset-4 bg-cyber-bg border border-cyber-primary rounded-full flex items-center justify-center shadow-neon-red">
+                            <i class="fa-solid fa-skull text-cyber-primary text-2xl animate-bounce"></i>
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg font-mono font-semibold tracking-widest text-cyber-primary mb-2">
+                        MENGEKSTRAK KODE ENKRIPSI DARI TIKTOK API...
+                    </h3>
+                    <div class="max-w-xs mx-auto bg-cyber-bg h-2 rounded-full overflow-hidden border border-cyber-border mb-3">
+                        <div id="loading-bar" class="bg-gradient-to-r from-cyber-primary to-cyber-secondary h-full w-0 transition-all duration-300"></div>
+                    </div>
+                    <div id="loading-logs" class="text-xs font-mono text-gray-500 h-6 overflow-hidden">
+                        [System] Membangun portal makam digital...
+                    </div>
+                </div>
+
+                <!-- MEDIA PLAY PREVIEW & INSTANT DOWNLOAD INTERFACES -->
+                <div id="result-panel" class="hidden mt-8 max-w-4xl mx-auto transition-all duration-500 scale-95 opacity-0">
+                    <div class="bg-cyber-panel border border-cyber-primary/40 rounded-2xl overflow-hidden shadow-neon-red relative">
+                        
+                        <!-- Bar status hasil -->
+                        <div class="bg-cyber-bg border-b border-cyber-border px-6 py-4 flex items-center justify-between font-mono text-xs text-gray-400">
+                            <span class="flex items-center gap-2 text-cyber-primary">
+                                <span class="w-2.5 h-2.5 rounded-full bg-cyber-primary animate-ping"></span>
+                                CRYPT GATEWAY: EKSTRAKSI NYATA BERHASIL
+                            </span>
+                            <span id="detected-type" class="bg-cyber-primary/10 text-cyber-primary px-3 py-1 rounded border border-cyber-primary/20 uppercase tracking-widest font-bold">
+                                VIDEO
+                            </span>
+                        </div>
+
+                        <!-- Layout Preview & Download -->
+                        <div class="p-6 grid grid-cols-1 md:grid-cols-12 gap-6">
+                            
+                            <!-- SISI KIRI: REAL PLAYER PREVIEW (Bisa dilihat/diputar sebelum didownload) -->
+                            <div class="md:col-span-5 flex flex-col items-center justify-center bg-cyber-bg rounded-xl border border-cyber-border p-4 relative min-h-[350px] overflow-hidden">
+                                <div class="absolute inset-x-0 h-0.5 bg-cyber-primary/30 laser-line z-10 pointer-events-none"></div>
+
+                                <!-- Real Video Player -->
+                                <div id="preview-video-container" class="w-full h-full flex flex-col justify-center items-center hidden">
+                                    <video id="preview-video" controls playsinline class="w-full max-h-[350px] object-contain rounded-lg border border-cyber-border bg-black shadow-neon-red">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <span class="text-[10px] font-mono text-gray-500 mt-2">
+                                        <i class="fa-solid fa-play-circle text-cyber-primary mr-1"></i> TAP PLAYER UNTUK MELIHAT ISI VIDEO
+                                    </span>
+                                </div>
+
+                                <!-- Real Image Slide Carousel -->
+                                <div id="preview-slides-container" class="w-full h-full flex flex-col items-center justify-center hidden">
+                                    <div class="relative w-full flex items-center justify-center">
+                                        <img id="preview-slide-img" src="" alt="TikTok Slide" class="max-h-[300px] object-contain rounded-lg border border-cyber-border bg-black shadow-neon-purple">
+                                        
+                                        <button onclick="prevSlide()" class="absolute left-2 bg-cyber-panel/85 hover:bg-cyber-primary hover:text-cyber-bg border border-cyber-primary text-cyber-text p-2 rounded-full transition-all">
+                                            <i class="fa-solid fa-chevron-left text-xs"></i>
+                                        </button>
+                                        <button onclick="nextSlide()" class="absolute right-2 bg-cyber-panel/85 hover:bg-cyber-primary hover:text-cyber-bg border border-cyber-primary text-cyber-text p-2 rounded-full transition-all">
+                                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                                        </button>
+                                    </div>
+                                    <div id="slide-indicator" class="text-xs font-mono text-cyber-primary mt-2">
+                                        Slide 1 / 1
+                                    </div>
+                                </div>
+
+                                <!-- Real Audio Player -->
+                                <div id="preview-audio-container" class="w-full h-full flex flex-col items-center justify-center py-6 hidden">
+                                    <div class="relative w-24 h-24 bg-cyber-panel border border-cyber-primary rounded-full flex items-center justify-center mb-4 pulse-cyber">
+                                        <i class="fa-solid fa-headphones text-cyber-primary text-4xl animate-bounce"></i>
+                                    </div>
+                                    <audio id="preview-audio" controls class="w-full max-w-[250px] mb-2 bg-cyber-bg rounded-lg border border-cyber-primary p-1">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                    <span class="text-[10px] font-mono text-cyber-primary mt-1">
+                                        <i class="fa-solid fa-volume-high mr-1"></i> PRATINJAU AUDIO SEBELUM DI-DOWNLOAD
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- SISI KANAN: Detail Informasi & Opsi Direct Download -->
+                            <div class="md:col-span-7 flex flex-col justify-between">
+                                <div class="mb-6">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <img id="author-avatar" src="" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-cyber-primary object-cover">
+                                        <div>
+                                            <h4 id="author-name" class="font-bold text-white tracking-wide">@TikTokCreator</h4>
+                                            <p id="author-nickname" class="text-xs text-cyber-primary font-mono">Gothic Cyber Host</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-cyber-bg/70 border border-cyber-border p-4 rounded-xl">
+                                        <p id="content-desc" class="text-sm text-gray-300 leading-relaxed font-sans">
+                                            Mengekstrak parameter rahasia dari makam TikTok...
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- OPSI DIRECT DOWNLOAD (LANCAR TANPA MEMBUKA TAB BARU JIKA MEMUNGKINKAN) -->
+                                <div class="space-y-3">
+                                    <h5 class="text-xs font-mono text-gray-500 uppercase tracking-widest mb-1 flex items-center gap-2">
+                                        <i class="fa-solid fa-bone text-cyber-primary"></i> RITUAL UNDUHAN LANGSUNG:
+                                    </h5>
+
+                                    <!-- Row Download Video No Watermark -->
+                                    <div id="dl-video-row" class="flex items-center justify-between p-3 bg-cyber-bg border border-cyber-border hover:border-cyber-primary rounded-xl transition-all duration-300 group">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-cyber-primary/10 rounded-lg flex items-center justify-center text-cyber-primary border border-cyber-primary/20">
+                                                <i class="fa-solid fa-skull"></i>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-semibold text-white">Video (Tanpa Watermark)</p>
+                                                <p class="text-[10px] text-gray-500 font-mono">Format: High Quality (.MP4)</p>
+                                            </div>
+                                        </div>
+                                        <button onclick="triggerDirectDownload('video')" class="px-5 py-2 bg-cyber-primary hover:bg-cyber-bg border border-cyber-primary text-cyber-bg hover:text-cyber-primary font-mono text-xs font-bold rounded-lg flex items-center gap-2 shadow-neon-red transition-all duration-300">
+                                            <i class="fa-solid fa-download"></i> AMBIL VIDEO
+                                        </button>
+                                    </div>
+
+                                    <!-- Row Download Audio Original MP3 -->
+                                    <div id="dl-audio-row" class="flex items-center justify-between p-3 bg-cyber-bg border border-cyber-border hover:border-cyber-secondary rounded-xl transition-all duration-300 group">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-cyber-secondary/10 rounded-lg flex items-center justify-center text-cyber-secondary border border-cyber-secondary/20">
+                                                <i class="fa-solid fa-music"></i>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-semibold text-white">Audio MP3 Original</p>
+                                                <p class="text-[10px] text-gray-500 font-mono">Format: Stereo Audio (.MP3)</p>
+                                            </div>
+                                        </div>
+                                        <button onclick="triggerDirectDownload('audio')" class="px-5 py-2 bg-cyber-secondary hover:bg-cyber-bg border border-cyber-secondary text-cyber-bg hover:text-cyber-secondary font-mono text-xs font-bold rounded-lg flex items-center gap-2 shadow-neon-purple transition-all duration-300">
+                                            <i class="fa-solid fa-volume-high"></i> AMBIL AUDIO
+                                        </button>
+                                    </div>
+
+                                    <!-- Row Download Slides -->
+                                    <div id="dl-images-row" class="hidden flex flex-col p-4 bg-cyber-bg border border-cyber-border hover:border-cyber-accent rounded-xl transition-all duration-300 gap-3">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-10 h-10 bg-cyber-accent/10 rounded-lg flex items-center justify-center text-cyber-accent border border-cyber-accent/20">
+                                                    <i class="fa-solid fa-images"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-semibold text-white">Slide Foto TikTok</p>
+                                                    <p id="image-count-txt" class="text-[10px] text-gray-500 font-mono">Total: 0 Gambar</p>
+                                                </div>
+                                            </div>
+                                            <button onclick="triggerDirectDownload('all_images')" class="px-4 py-2 bg-cyber-accent hover:bg-cyber-bg border border-cyber-accent text-cyber-bg hover:text-cyber-accent font-mono text-xs font-bold rounded-lg flex items-center gap-2 shadow-neon-bone transition-all duration-300">
+                                                <i class="fa-solid fa-box-archive"></i> AMBIL SEMUA
+                                            </button>
+                                        </div>
+                                        <div class="border-t border-cyber-border/40 pt-2">
+                                            <p class="text-[10px] font-mono text-gray-400 uppercase mb-2">Simpan Gambar Satuan:</p>
+                                            <div id="image-download-grid" class="grid grid-cols-4 gap-2">
+                                                <!-- Tombol gambar satuan akan ditaruh di sini -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: PORTFOLIO CYBER GOTHIC PROFILE -->
+            <section id="about" class="mb-16 border-t border-cyber-border pt-16">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
+                    <!-- Visualisasi Hologram Tengkorak Portofolio -->
+                    <div class="md:col-span-5 flex justify-center relative">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-cyber-primary to-cyber-secondary rounded-full blur opacity-25"></div>
+                        <div class="relative w-72 h-72 rounded-3xl bg-cyber-panel border border-cyber-primary/30 flex items-center justify-center overflow-hidden shadow-neon-red">
+                            <div class="absolute inset-0 bg-grid opacity-30"></div>
+                            
+                            <div class="z-10 flex flex-col items-center">
+                                <div class="w-32 h-32 rounded-full border-4 border-cyber-primary/40 p-1 mb-4 flex items-center justify-center relative">
+                                    <div class="absolute inset-0 rounded-full border-2 border-dashed border-cyber-secondary orbit-slow"></div>
+                                    <div class="w-full h-full bg-cyber-bg rounded-full flex items-center justify-center">
+                                        <i class="fa-solid fa-skull-crossbones text-cyber-primary text-5xl"></i>
+                                    </div>
+                                </div>
+                                <span class="font-mono text-cyber-primary text-sm font-bold tracking-widest mb-1">MEMENTO MORI v1.0</span>
+                                <span class="font-mono text-xs text-gray-500">[CYBER DECOY ENGINE]</span>
+                            </div>
+
+                            <div class="absolute bottom-4 inset-x-4 flex justify-between font-mono text-[10px] text-gray-400">
+                                <span>CRYPT SYSTEM</span>
+                                <span>AURA: 100%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Informasi Developer -->
+                    <div class="md:col-span-7">
+                        <div class="inline-block px-3 py-1 bg-cyber-primary/10 border border-cyber-primary/30 rounded-full text-xs font-mono text-cyber-primary mb-3 uppercase tracking-widest">
+                            <i class="fa-solid fa-id-card mr-1"></i> Crypt Keeper Profile
+                        </div>
+                        <h3 class="text-3xl font-extrabold tracking-tight mb-4 font-mono">
+                            PROFIL PEMILIK <span class="text-cyber-primary">MAKAM DIGITAL</span>
+                        </h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                            Selamat datang di crypt rahasia saya. Saya adalah arsitek cyber-gothic yang mendalami seni bypass data media sosial. Menggabungkan unsur mistis kematian dengan sirkuit teknologi tinggi untuk membangun sistem download paling murni tanpa interupsi pihak ketiga.
+                        </p>
+
+                        <!-- Statistik Grid Portofolio -->
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
+                            <div class="bg-cyber-panel border border-cyber-border p-4 rounded-xl font-mono">
+                                <span class="text-gray-500 text-xs block">SUKSES RITUAL</span>
+                                <span class="text-2xl font-bold text-cyber-primary">99.9%</span>
+                            </div>
+                            <div class="bg-cyber-panel border border-cyber-border p-4 rounded-xl font-mono">
+                                <span class="text-gray-500 text-xs block">SPEED EXTRACTION</span>
+                                <span class="text-2xl font-bold text-cyber-secondary">&lt; 0.4s</span>
+                            </div>
+                            <div class="bg-cyber-panel border border-cyber-border p-4 rounded-xl font-mono col-span-2 sm:col-span-1">
+                                <span class="text-gray-500 text-xs block">SANDBOX</span>
+                                <span class="text-2xl font-bold text-cyber-accent">SECURE</span>
+                            </div>
+                        </div>
+
+                        <!-- Keahlian Tambahan -->
+                        <div class="space-y-2">
+                            <span class="text-xs font-mono text-gray-400 block uppercase tracking-wider">Mantra Teknologi:</span>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-cyber-panel border border-cyber-border rounded-lg text-xs font-mono text-cyber-primary">Necro Blob Downloader</span>
+                                <span class="px-3 py-1 bg-cyber-panel border border-cyber-border rounded-lg text-xs font-mono text-cyber-secondary">CORS Decoy Controller</span>
+                                <span class="px-3 py-1 bg-cyber-panel border border-cyber-border rounded-lg text-xs font-mono text-cyber-accent">Spectral API Core</span>
+                                <span class="px-3 py-1 bg-cyber-panel border border-cyber-border rounded-lg text-xs font-mono text-white">Pure Vanilla Witchcraft</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3: PROTOCOLS -->
+            <section id="features" class="border-t border-cyber-border pt-16">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-extrabold tracking-tight mb-4 font-mono">
+                        MANTERA & <span class="text-cyber-primary">CARA KERJA</span>
+                    </h3>
+                    <p class="text-gray-400 max-w-xl mx-auto text-sm">
+                        Bagaimana ritual kuno kami mengekstrak konten TikTok secara presisi untuk kenyamanan Anda.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Fitur 1 -->
+                    <div class="bg-cyber-panel border border-cyber-border p-6 rounded-2xl relative overflow-hidden group hover:border-cyber-primary transition-all duration-300">
+                        <div class="absolute -top-10 -right-10 w-24 h-24 bg-cyber-primary/5 rounded-full group-hover:bg-cyber-primary/10 transition-all"></div>
+                        <div class="w-12 h-12 bg-cyber-primary/10 rounded-xl flex items-center justify-center text-cyber-primary mb-4 border border-cyber-primary/20">
+                            <i class="fa-solid fa-bone text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-mono font-bold text-white mb-2">Direct Bone Extractor</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed">
+                            Metode pengunduhan langsung dengan merubah target tautan media menjadi Blob binary di memori browser. Ini mencegah peramban membuka video di tab baru secara default.
+                        </p>
+                    </div>
+
+                    <!-- Fitur 2 -->
+                    <div class="bg-cyber-panel border border-cyber-border p-6 rounded-2xl relative overflow-hidden group hover:border-cyber-secondary transition-all duration-300">
+                        <div class="absolute -top-10 -right-10 w-24 h-24 bg-cyber-secondary/5 rounded-full group-hover:bg-cyber-secondary/10 transition-all"></div>
+                        <div class="w-12 h-12 bg-cyber-secondary/10 rounded-xl flex items-center justify-center text-cyber-secondary mb-4 border border-cyber-secondary/20">
+                            <i class="fa-solid fa-eye text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-mono font-bold text-white mb-2">Spectral Play Projection</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed">
+                            Kami menyematkan pemutar media bawaan yang responsif. Tonton video, slide foto, atau dengarkan instrumen audio secara langsung tepat sebelum Anda memutuskan mengunduhnya.
+                        </p>
+                    </div>
+
+                    <!-- Fitur 3 -->
+                    <div class="bg-cyber-panel border border-cyber-border p-6 rounded-2xl relative overflow-hidden group hover:border-cyber-accent transition-all duration-300">
+                        <div class="absolute -top-10 -right-10 w-24 h-24 bg-cyber-accent/5 rounded-full group-hover:bg-cyber-accent/10 transition-all"></div>
+                        <div class="w-12 h-12 bg-cyber-accent/10 rounded-xl flex items-center justify-center text-cyber-accent mb-4 border border-cyber-accent/20">
+                            <i class="fa-solid fa-gavel text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-mono font-bold text-white mb-2">No Corruption sandbox</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed">
+                            Bebas dari iklan pop-up berbahaya yang merusak perangkat Anda. Semua proses ekstraksi data dilakukan secara efisien, aman, dan tanpa menyimpan rekaman data unduhan pribadi Anda.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="border-t border-cyber-border bg-cyber-panel mt-20 py-8 font-mono text-xs">
+            <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-skull text-cyber-primary"></i>
+                    <span class="text-gray-400">© 2026 DEATH-DL. Memento Mori.</span>
+                </div>
+                <div class="flex gap-4 text-gray-500">
+                    <span class="text-cyber-primary">CRYPT SECURE PROTECTION</span>
+                    <span>//</span>
+                    <span>SOUL CONNECTION ESTABLISHED</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- SCRIPT LOGIKA UTAMA -->
+    <script>
+        // Logika Intro Video (Autoplay dengan fallback jika diblokir browser)
+        const introScreen = document.getElementById('intro-screen');
+        const mainApp = document.getElementById('main-app');
+        const introVideo = document.getElementById('intro-video');
+        const skipIntroBtn = document.getElementById('skip-intro-btn');
+
+        // Fungsi Transisi Keluar dari Layar Intro
+        function exitIntro() {
+            // Hentikan video intro
+            introVideo.pause();
+            
+            // Animasi menghilang (fade out)
+            introScreen.classList.add('opacity-0');
+            setTimeout(() => {
+                introScreen.classList.add('hidden');
+                
+                // Munculkan aplikasi utama
+                mainApp.classList.remove('pointer-events-none');
+                mainApp.classList.remove('opacity-0');
+                mainApp.classList.add('opacity-100');
+                
+                showToast('SUCCESS', 'Selamat Datang di Portal DEATH-DL.');
+            }, 1000);
+        }
+
+        // Jalankan event skip
+        skipIntroBtn.addEventListener('click', exitIntro);
+
+        // Jika video berakhir secara alami, langsung buka web
+        introVideo.addEventListener('ended', exitIntro);
+
+        // Handle kegagalan autoplay video (kebijakan keamanan browser)
+        window.addEventListener('DOMContentLoaded', () => {
+            const playPromise = introVideo.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Autoplay diblokir browser. Pengguna harus menekan skip / berinteraksi.", error);
+                    // Jika diblokir, tetap biarkan layar menyala menunggu skip
+                });
+            }
+        });
+
+        // Data Contoh Untuk Kasus Offline / Tanpa Koneksi Ke API Pusat (Tema Death)
+        const backupMockData = {
+            video: {
+                type: 'video',
+                author: '@necro_lord_666',
+                nickname: 'Grave Overlord',
+                avatar: 'https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=150&auto=format&fit=crop',
+                desc: 'Ritual pemanggilan sirkuit kematian kuno menyala dengan warna merah darah sirkuit cyber-gothic! #cyberpunk #gothic #scifi #skeleton',
+                mediaUrl: 'https://assets.mixkit.co/videos/preview/mixkit-circuit-board-of-a-computer-processing-data-40544-large.mp4',
+                audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+                fileName: 'DeathDL_Video_Unmasked.mp4'
+            },
+            images: {
+                type: 'images',
+                author: '@crypt_frame_illustrator',
+                nickname: 'Crypt Frame Artist',
+                avatar: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=150&auto=format&fit=crop',
+                desc: 'Galeri sirkuit digital kuno dengan struktur tulang menyala. Swipe ke kiri untuk menyaksikan ritual sirkuit mistis selanjutnya! #cybermori #darkweb #tech',
+                imagesList: [
+                    'https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=600&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=600&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1531746790731-6c087fecd793?q=80&w=600&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=600&auto=format&fit=crop'
+                ],
+                fileNamePrefix: 'DeathDL_Slide_Ritual',
+                audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+                audioName: 'Crypt_Cyberpunk_Synth.mp3'
+            },
+            audio: {
+                type: 'audio',
+                author: '@necromancer_dj',
+                nickname: 'Spectral Sound System',
+                avatar: 'https://images.unsplash.com/photo-1527474305487-b87b222841cc?q=80&w=150&auto=format&fit=crop',
+                desc: 'Instrumen audio asli bertema Dark Techno Cyberpunk untuk meningkatkan fokus Anda saat membelah kode keamanan. #darktechno #gravebeats #coding',
+                audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
+                fileName: 'DeathDL_Spectral_Audio.mp3'
+            }
+        };
+
+        let currentSlideIndex = 0;
+        let currentLoadedMedia = null;
+
+        // Inisialisasi Elemen DOM
+        const inputUrl = document.getElementById('tiktok-url');
+        const btnScan = document.getElementById('btn-scan');
+        const btnClear = document.getElementById('btn-clear');
+        const loaderPanel = document.getElementById('loader-panel');
+        const loadingBar = document.getElementById('loading-bar');
+        const loadingLogs = document.getElementById('loading-logs');
+        const resultPanel = document.getElementById('result-panel');
+
+        // Elemen Hasil Panel
+        const detectedTypeBadge = document.getElementById('detected-type');
+        const authorAvatar = document.getElementById('author-avatar');
+        const authorName = document.getElementById('author-name');
+        const authorNickname = document.getElementById('author-nickname');
+        const contentDesc = document.getElementById('content-desc');
+
+        // Elemen Kontainer Pratinjau
+        const prevVideoContainer = document.getElementById('preview-video-container');
+        const prevVideo = document.getElementById('preview-video');
+        const prevSlidesContainer = document.getElementById('preview-slides-container');
+        const prevSlideImg = document.getElementById('preview-slide-img');
+        const slideIndicator = document.getElementById('slide-indicator');
+        const prevAudioContainer = document.getElementById('preview-audio-container');
+        const prevAudio = document.getElementById('preview-audio');
+
+        // Elemen Baris Download
+        const dlVideoRow = document.getElementById('dl-video-row');
+        const dlAudioRow = document.getElementById('dl-audio-row');
+        const dlImagesRow = document.getElementById('dl-images-row');
+        const imageCountTxt = document.getElementById('image-count-txt');
+        const imageDownloadGrid = document.getElementById('image-download-grid');
+
+        // Pasang Event Listeners
+        inputUrl.addEventListener('input', handleInputChange);
+        btnClear.addEventListener('click', clearInput);
+        btnScan.addEventListener('click', parseTikTokLink);
+
+        function handleInputChange() {
+            if (inputUrl.value.trim().length > 0) {
+                btnClear.classList.remove('hidden');
+            } else {
+                btnClear.classList.add('hidden');
+            }
+        }
+
+        function clearInput() {
+            inputUrl.value = '';
+            btnClear.classList.add('hidden');
+            inputUrl.focus();
+        }
+
+        function loadSampleLink(type) {
+            clearInput();
+            let sampleUrl = '';
+            if (type === 'video') {
+                sampleUrl = 'https://www.tiktok.com/@v_yuliana_/video/731083920193';
+            } else if (type === 'images') {
+                sampleUrl = 'https://www.tiktok.com/@v_yuliana_/photo/738291039123';
+            } else if (type === 'audio') {
+                sampleUrl = 'https://www.tiktok.com/music/Synthwave-Cybernetic-Beat-1029301';
+            }
+            inputUrl.value = sampleUrl;
+            btnClear.classList.remove('hidden');
+            showToast('INFO', 'Mantra sampel siap dikonversi oleh gerbang makam.');
+        }
+
+        function showToast(type, message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            let colorClass = 'border-cyber-primary text-cyber-primary shadow-neon-red';
+            let icon = 'fa-skull';
+            if (type === 'SUCCESS') {
+                colorClass = 'border-cyber-secondary text-cyber-secondary shadow-neon-purple';
+                icon = 'fa-skull-crossbones';
+            } else if (type === 'ERROR') {
+                colorClass = 'border-cyber-accent text-cyber-accent shadow-neon-bone';
+                icon = 'fa-ghost';
+            }
+
+            toast.className = `p-4 bg-cyber-panel border rounded-xl flex items-center gap-3 font-mono text-xs pointer-events-auto transition-all duration-300 transform translate-x-12 opacity-0 ${colorClass}`;
+            toast.innerHTML = `
+                <i class="fa-solid ${icon} text-lg"></i>
+                <div>
+                    <p class="font-bold tracking-wider">${type}</p>
+                    <p class="text-[10px] text-gray-400 mt-0.5">${message}</p>
+                </div>
+            `;
+
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-x-12', 'opacity-0');
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.add('translate-x-12', 'opacity-0');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 5000);
+        }
+
+        // Hentikan Semua Pemutaran Media yang Berlangsung
+        function stopAllMedia() {
+            try {
+                prevVideo.pause();
+                prevVideo.removeAttribute('src'); 
+                prevVideo.load();
+                prevAudio.pause();
+                prevAudio.removeAttribute('src');
+                prevAudio.load();
+            } catch (e) {
+                console.log('Media reset ignored', e);
+            }
+        }
+
+        // MENJEMBATANI TIKTOK LINK MELALUI API REAL (TIKWM)
+        async function parseTikTokLink() {
+            const urlValue = inputUrl.value.trim();
+            if (!urlValue) {
+                showToast('ERROR', 'Salin dan gantung link TikTok terlebih dahulu.');
+                return;
+            }
+
+            if (!urlValue.includes('tiktok.com') && !urlValue.includes('douyin.com')) {
+                showToast('ERROR', 'Tautan tidak valid! Pastikan mengandung sirkuit tiktok.com.');
+                return;
+            }
+
+            stopAllMedia();
+            resultPanel.classList.add('hidden', 'opacity-0', 'scale-95');
+            loaderPanel.classList.remove('hidden');
+
+            let progress = 0;
+            loadingBar.style.width = '0%';
+            
+            const logs = [
+                '[Ritual] Membuka bypass enkripsi makam...',
+                '[Ritual] Memanggil jiwa server API TikWM...',
+                '[Ritual] Berhasil meremajakan pratinjau media...',
+                '[Ritual] Menyusun kerangka visual & link unduhan...',
+                '[Ritual] Jiwa media terkumpul sempurna!'
+            ];
+
+            const interval = setInterval(() => {
+                progress += 10;
+                loadingBar.style.width = `${progress}%`;
+                const logIndex = Math.min(Math.floor(progress / 20), logs.length - 1);
+                loadingLogs.innerHTML = logs[logIndex];
+            }, 150);
+
+            try {
+                // Fetch dari API TikWM
+                const apiEndpoint = `https://www.tikwm.com/api/?url=${encodeURIComponent(urlValue)}`;
+                const response = await fetch(apiEndpoint);
+                const result = await response.json();
+
+                clearInterval(interval);
+                loadingBar.style.width = '100%';
+
+                setTimeout(() => {
+                    loaderPanel.classList.add('hidden');
+                    
+                    if (result && result.code === 0 && result.data) {
+                        const tikData = result.data;
+                        let extractedMedia = {};
+                        
+                        if (tikData.images && tikData.images.length > 0) {
+                            extractedMedia = {
+                                type: 'images',
+                                author: '@' + (tikData.author.unique_id || 'creator'),
+                                nickname: tikData.author.nickname || 'TikTok Spirit',
+                                avatar: tikData.author.avatar || 'https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=150',
+                                desc: tikData.title || 'Slide Foto TikTok',
+                                imagesList: tikData.images, 
+                                audioUrl: tikData.music || tikData.play,
+                                audioName: (tikData.music_info?.title || 'Death_Audio') + '.mp3',
+                                fileNamePrefix: 'DeathDL_Slide'
+                            };
+                        } else {
+                            extractedMedia = {
+                                type: 'video',
+                                author: '@' + (tikData.author.unique_id || 'creator'),
+                                nickname: tikData.author.nickname || 'TikTok Spirit',
+                                avatar: tikData.author.avatar || 'https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=150',
+                                desc: tikData.title || 'Video Tanpa Judul',
+                                mediaUrl: tikData.play || tikData.wmplay, 
+                                audioUrl: tikData.music || '',
+                                fileName: `DeathDL_Video_${tikData.id || 'core'}.mp4`
+                            };
+                        }
+
+                        renderMediaResult(extractedMedia);
+                    } else {
+                        showToast('ERROR', 'Jiwa online terputus. Mengaktifkan Proyeksi Makam Offline!');
+                        
+                        let fallbackType = 'video';
+                        if (urlValue.includes('photo') || urlValue.includes('images')) fallbackType = 'images';
+                        else if (urlValue.includes('music') || urlValue.includes('audio')) fallbackType = 'audio';
+
+                        renderMediaResult(backupMockData[fallbackType]);
+                    }
+                }, 300);
+
+            } catch (error) {
+                console.error("API Fetch Error: ", error);
+                clearInterval(interval);
+                loaderPanel.classList.add('hidden');
+                
+                showToast('ERROR', 'Gagal memanggil API. Membuka Makam Offline!');
+                renderMediaResult(backupMockData.video);
+            }
+        }
+
+        // Merender Hasil Ekstraksi
+        function renderMediaResult(selectedData) {
+            currentLoadedMedia = selectedData;
+
+            detectedTypeBadge.innerText = selectedData.type.toUpperCase();
+            authorAvatar.src = selectedData.avatar;
+            authorName.innerText = selectedData.author;
+            authorNickname.innerText = selectedData.nickname;
+            contentDesc.innerText = selectedData.desc;
+
+            prevVideoContainer.classList.add('hidden');
+            prevSlidesContainer.classList.add('hidden');
+            prevAudioContainer.classList.add('hidden');
+
+            dlVideoRow.classList.add('hidden');
+            dlAudioRow.classList.add('hidden');
+            dlImagesRow.classList.add('hidden');
+
+            if (selectedData.type === 'video') {
+                prevVideoContainer.classList.remove('hidden');
+                
+                prevVideo.src = selectedData.mediaUrl;
+                prevVideo.preload = "auto";
+                prevVideo.load();
+                
+                dlVideoRow.classList.remove('hidden');
+                if (selectedData.audioUrl) {
+                    dlAudioRow.classList.remove('hidden');
+                }
+            } 
+            else if (selectedData.type === 'images') {
+                prevSlidesContainer.classList.remove('hidden');
+                currentSlideIndex = 0;
+                updateSlidePreview();
+
+                dlImagesRow.classList.remove('hidden');
+                if (selectedData.audioUrl) {
+                    dlAudioRow.classList.remove('hidden');
+                }
+
+                imageCountTxt.innerText = `Total: ${selectedData.imagesList.length} Foto Tulang`;
+                imageDownloadGrid.innerHTML = '';
+                selectedData.imagesList.forEach((imgUrl, idx) => {
+                    imageDownloadGrid.innerHTML += `
+                        <button onclick="triggerDirectDownload('single_image', ${idx})" class="p-2 bg-cyber-panel/80 hover:bg-cyber-primary border border-cyber-border hover:border-cyber-primary rounded-lg font-mono text-[10px] font-bold text-center text-gray-400 hover:text-cyber-bg transition-all flex flex-col items-center gap-1">
+                            <i class="fa-solid fa-bone"></i> Tulang ${idx + 1}
+                        </button>
+                    `;
+                });
+            } 
+            else if (selectedData.type === 'audio') {
+                prevAudioContainer.classList.remove('hidden');
+                prevAudio.src = selectedData.audioUrl;
+                prevAudio.preload = "auto";
+                prevAudio.load();
+
+                dlAudioRow.classList.remove('hidden');
+            }
+
+            resultPanel.classList.remove('hidden');
+            setTimeout(() => {
+                resultPanel.classList.remove('opacity-0', 'scale-95');
+                resultPanel.classList.add('opacity-100', 'scale-100');
+                showToast('SUCCESS', `Sistem mendeteksi objek: ${selectedData.type.toUpperCase()}`);
+            }, 100);
+        }
+
+        // Navigasi Slider Foto
+        function updateSlidePreview() {
+            if (!currentLoadedMedia || !currentLoadedMedia.imagesList) return;
+            const images = currentLoadedMedia.imagesList;
+            prevSlideImg.src = images[currentSlideIndex];
+            slideIndicator.innerText = `Slide ${currentSlideIndex + 1} / ${images.length}`;
+        }
+
+        function nextSlide() {
+            if (!currentLoadedMedia || !currentLoadedMedia.imagesList) return;
+            currentSlideIndex = (currentSlideIndex + 1) % currentLoadedMedia.imagesList.length;
+            updateSlidePreview();
+        }
+
+        function prevSlide() {
+            if (!currentLoadedMedia || !currentLoadedMedia.imagesList) return;
+            currentSlideIndex = (currentSlideIndex - 1 + currentLoadedMedia.imagesList.length) % currentLoadedMedia.imagesList.length;
+            updateSlidePreview();
+        }
+
+        // DIRECT DOWNLOAD TANPA MEMBUKA VIDEO / TAB BARU
+        async function triggerDirectDownload(targetType, index = 0) {
+            if (!currentLoadedMedia) {
+                showToast('ERROR', 'Tidak ada data jiwa media aktif.');
+                return;
+            }
+
+            let downloadUrl = '';
+            let finalFileName = '';
+
+            if (targetType === 'video') {
+                downloadUrl = currentLoadedMedia.mediaUrl;
+                finalFileName = currentLoadedMedia.fileName || 'DeathDL_Video_No_WM.mp4';
+            } 
+            else if (targetType === 'audio') {
+                downloadUrl = currentLoadedMedia.audioUrl;
+                finalFileName = currentLoadedMedia.audioName || 'DeathDL_Audio.mp3';
+            } 
+            else if (targetType === 'single_image') {
+                downloadUrl = currentLoadedMedia.imagesList[index];
+                finalFileName = `${currentLoadedMedia.fileNamePrefix || 'Slide'}_${index + 1}.jpg`;
+            } 
+            else if (targetType === 'all_images') {
+                showToast('INFO', 'Mengekstrak seluruh tulang-tulang gambar ke dalam dek Anda...');
+                for (let i = 0; i < currentLoadedMedia.imagesList.length; i++) {
+                    await performBlobDownload(
+                        currentLoadedMedia.imagesList[i], 
+                        `${currentLoadedMedia.fileNamePrefix || 'Slide'}_${i + 1}.jpg`
+                    );
+                }
+                showToast('SUCCESS', 'Seluruh berkas gambar berhasil dikumpulkan.');
+                return;
+            }
+
+            if (!downloadUrl) {
+                showToast('ERROR', 'Parameter link unduhan kosong!');
+                return;
+            }
+
+            showToast('INFO', 'Menarik data langsung secara murni...');
+            
+            const success = await performBlobDownload(downloadUrl, finalFileName);
+            if (success) {
+                showToast('SUCCESS', `Penyimpanan Berhasil: ${finalFileName}`);
+            } else {
+                // FALLBACK BYPASS PROXY JIKA CORS MEMBATASI
+                showToast('INFO', 'Mengaktifkan mantra bypass server penarik...');
+                const forcedProxyUrl = `https://www.tikwm.com/api/download.php?url=${encodeURIComponent(downloadUrl)}&type=video`;
+                
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.src = downloadUrl.includes('tikwm.com') ? downloadUrl : forcedProxyUrl;
+                document.body.appendChild(iframe);
+                
+                setTimeout(() => {
+                    document.body.removeChild(iframe);
+                }, 5000);
+            }
+        }
+
+        // Pengunduh Blob Jantung Utama
+        async function performBlobDownload(url, filename) {
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    mode: 'cors',
+                    credentials: 'omit'
+                });
+
+                if (!response.ok) throw new Error('Status respon buruk');
+                
+                const blob = await response.blob();
+                const blobUrl = window.URL.createObjectURL(blob);
+                
+                const tempAnchor = document.createElement('a');
+                tempAnchor.style.display = 'none';
+                tempAnchor.href = blobUrl;
+                tempAnchor.download = filename;
+                
+                document.body.appendChild(tempAnchor);
+                tempAnchor.click();
+                
+                document.body.removeChild(tempAnchor);
+                window.URL.revokeObjectURL(blobUrl);
+                return true;
+            } catch (err) {
+                console.warn('Gagal memproses Blob langsung, menggunakan sistem unduh cadangan.', err);
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>
